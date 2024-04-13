@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author Colin But
  */
 @WebMvcTest(VisitController.class)
-public class VisitControllerTests {
+class VisitControllerTests {
 
     private static final int TEST_PET_ID = 1;
 
@@ -38,19 +38,19 @@ public class VisitControllerTests {
     private PetRepository pets;
 
     @BeforeEach
-    public void init() {
+    void init() {
         given(this.pets.findById(TEST_PET_ID)).willReturn(new Pet());
     }
 
     @Test
-    public void testInitNewVisitForm() throws Exception {
+    void initNewVisitForm() throws Exception {
         mockMvc.perform(get("/owners/*/pets/{petId}/visits/new", TEST_PET_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("pets/createOrUpdateVisitForm"));
     }
 
     @Test
-    public void testProcessNewVisitFormSuccess() throws Exception {
+    void processNewVisitFormSuccess() throws Exception {
         mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)
             .param("name", "George")
             .param("description", "Visit Description")
@@ -60,7 +60,7 @@ public class VisitControllerTests {
     }
 
     @Test
-    public void testProcessNewVisitFormHasErrors() throws Exception {
+    void processNewVisitFormHasErrors() throws Exception {
         mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)
             .param("name", "George")
         )

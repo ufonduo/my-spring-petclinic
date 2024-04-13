@@ -25,7 +25,7 @@ import org.springframework.samples.petclinic.owner.PetTypeFormatter;
  * @author Colin But
  */
 @ExtendWith(MockitoExtension.class)
-public class PetTypeFormatterTests {
+class PetTypeFormatterTests {
 
     @Mock
     private PetRepository pets;
@@ -33,12 +33,12 @@ public class PetTypeFormatterTests {
     private PetTypeFormatter petTypeFormatter;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         this.petTypeFormatter = new PetTypeFormatter(pets);
     }
 
     @Test
-    public void testPrint() {
+    void print() {
         PetType petType = new PetType();
         petType.setName("Hamster");
         String petTypeName = this.petTypeFormatter.print(petType, Locale.ENGLISH);
@@ -46,14 +46,14 @@ public class PetTypeFormatterTests {
     }
 
     @Test
-    public void shouldParse() throws ParseException {
+    void shouldParse() throws ParseException {
         Mockito.when(this.pets.findPetTypes()).thenReturn(makePetTypes());
         PetType petType = petTypeFormatter.parse("Bird", Locale.ENGLISH);
         assertEquals("Bird", petType.getName());
     }
 
     @Test
-    public void shouldThrowParseException() throws ParseException {
+    void shouldThrowParseException() throws ParseException {
         assertThrows(ParseException.class, () -> {
             Mockito.when(this.pets.findPetTypes()).thenReturn(makePetTypes());
             petTypeFormatter.parse("Fish", Locale.ENGLISH);

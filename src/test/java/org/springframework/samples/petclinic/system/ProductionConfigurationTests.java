@@ -7,13 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.petclinic.vet.VetRepository;
 
 @SpringBootTest
-public class ProductionConfigurationTests {
+class ProductionConfigurationTests {
 
     @Autowired
     private VetRepository vets;
 
     @Test
-    public void testFindAll() throws Exception {
+    void findAll() throws Exception {
         vets.findAll();
         vets.findAll(); // served from cache
     }

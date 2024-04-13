@@ -20,13 +20,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @Disabled
 @WebMvcTest(controllers = CrashController.class)
-public class CrashControllerTests {
+class CrashControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testTriggerException() throws Exception {
+    void triggerException() throws Exception {
         mockMvc.perform(get("/oups")).andExpect(view().name("exception"))
                 .andExpect(model().attributeExists("exception"))
                 .andExpect(forwardedUrl("exception")).andExpect(status().isOk());

@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author Colin But
  */
 @WebMvcTest(OwnerController.class)
-public class OwnerControllerTests {
+class OwnerControllerTests {
 
     private static final int TEST_OWNER_ID = 1;
 
@@ -39,7 +39,7 @@ public class OwnerControllerTests {
     private Owner george;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         george = new Owner();
         george.setId(TEST_OWNER_ID);
         george.setFirstName("George");
@@ -51,7 +51,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testInitCreationForm() throws Exception {
+    void initCreationForm() throws Exception {
         mockMvc.perform(get("/owners/new"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("owner"))
@@ -59,7 +59,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessCreationFormSuccess() throws Exception {
+    void processCreationFormSuccess() throws Exception {
         mockMvc.perform(post("/owners/new")
             .param("firstName", "Joe")
             .param("lastName", "Bloggs")
@@ -71,7 +71,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessCreationFormHasErrors() throws Exception {
+    void processCreationFormHasErrors() throws Exception {
         mockMvc.perform(post("/owners/new")
             .param("firstName", "Joe")
             .param("lastName", "Bloggs")
@@ -85,7 +85,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testInitFindForm() throws Exception {
+    void initFindForm() throws Exception {
         mockMvc.perform(get("/owners/find"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("owner"))
@@ -93,7 +93,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessFindFormSuccess() throws Exception {
+    void processFindFormSuccess() throws Exception {
         given(this.owners.findByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
         mockMvc.perform(get("/owners"))
             .andExpect(status().isOk())
@@ -101,7 +101,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessFindFormByLastName() throws Exception {
+    void processFindFormByLastName() throws Exception {
         given(this.owners.findByLastName(george.getLastName())).willReturn(Lists.newArrayList(george));
         mockMvc.perform(get("/owners")
             .param("lastName", "Franklin")
@@ -111,7 +111,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessFindFormNoOwnersFound() throws Exception {
+    void processFindFormNoOwnersFound() throws Exception {
         mockMvc.perform(get("/owners")
             .param("lastName", "Unknown Surname")
         )
@@ -122,7 +122,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testInitUpdateOwnerForm() throws Exception {
+    void initUpdateOwnerForm() throws Exception {
         mockMvc.perform(get("/owners/{ownerId}/edit", TEST_OWNER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("owner"))
@@ -135,7 +135,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessUpdateOwnerFormSuccess() throws Exception {
+    void processUpdateOwnerFormSuccess() throws Exception {
         mockMvc.perform(post("/owners/{ownerId}/edit", TEST_OWNER_ID)
             .param("firstName", "Joe")
             .param("lastName", "Bloggs")
@@ -148,7 +148,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testProcessUpdateOwnerFormHasErrors() throws Exception {
+    void processUpdateOwnerFormHasErrors() throws Exception {
         mockMvc.perform(post("/owners/{ownerId}/edit", TEST_OWNER_ID)
             .param("firstName", "Joe")
             .param("lastName", "Bloggs")
@@ -162,7 +162,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void testShowOwner() throws Exception {
+    void showOwner() throws Exception {
         mockMvc.perform(get("/owners/{ownerId}", TEST_OWNER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attribute("owner", hasProperty("lastName", is("Franklin"))))

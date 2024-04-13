@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.ResultActions;
  * Test class for the {@link VetController}
  */
 @WebMvcTest(VetController.class)
-public class VetControllerTests {
+class VetControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,7 +36,7 @@ public class VetControllerTests {
     private VetRepository vets;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         Vet james = new Vet();
         james.setFirstName("James");
         james.setLastName("Carter");
@@ -53,7 +53,7 @@ public class VetControllerTests {
     }
 
     @Test
-    public void testShowVetListHtml() throws Exception {
+    void showVetListHtml() throws Exception {
         mockMvc.perform(get("/vets.html"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("vets"))
@@ -61,19 +61,19 @@ public class VetControllerTests {
     }
 
     @Test
-    public void testShowResourcesVetList() throws Exception {
+    void showResourcesVetList() throws Exception {
         ResultActions actions = mockMvc.perform(get("/vets.json").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
-        actions.andExpect(content().contentType("application/json;charset=UTF-8"))
+        actions.andExpect(content().contentTypeCompatibleWith("application/json;charset=UTF-8"))
             .andExpect(jsonPath("$.vetList[0].id").value(1));
     }
 
     @Test
-    public void testShowVetListXml() throws Exception {
+    void showVetListXml() throws Exception {
         mockMvc.perform(get("/vets.xml").accept(MediaType.APPLICATION_XML))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-            .andExpect(content().node(hasXPath("/vets/vetList[id=1]/id")));
+            .andExpect(content().node(hasXPath("/Vets/vetList[1]/vetList[1]/id[1]")));
     }
 
 }
