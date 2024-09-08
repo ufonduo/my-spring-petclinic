@@ -49,11 +49,25 @@ class VetController {
 
     @GetMapping(value = {"/vets.json", "/vets.xml"}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody Vets showResourcesVetList() {
+        return produceVets();
+    }
+
+    private Vets produceVets() {
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for JSon/Object mapping
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vetRepository.findAll());
         return vets;
+    }
+
+    @GetMapping(value = "/renderVets.xml", produces = MediaType.APPLICATION_XML_VALUE)
+    public @ResponseBody Vets renderVetListAsXml() {
+        return produceVets();
+    }
+
+    @GetMapping(value = "/renderVets.json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Vets renderVetListAsJson() {
+        return produceVets();
     }
 
 }
